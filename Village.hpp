@@ -26,7 +26,7 @@ public:
     cell_      { cl },
     village_   { ve }
   {
-    std::clog << "@["s << this << "] "s
+    std::clog << "@["s << std::setw(18) << this << "] "s
               << " In "s << __func__
               << "(std::string const &,std::string const &,std::string const &,std::string const &std::string const &,std::string const &) - Default c'tor\n"s;
   }
@@ -39,13 +39,13 @@ public:
     cell_      { that.cell_ },
     village_   { that.village_ }
   {
-    std::clog << "@["s << this << "] "s
+    std::clog << "@["s << std::setw(18)  << this << "] "s
               << " In "s << __func__
               << "(Village const &) - Copy c'tor\n"s;
   }
 
   Village(Village && that) {
-    std::clog << "@["s << this << "] "s
+    std::clog << "@["s << std::setw(18)  << this << "] "s
               << " In "s << __func__
               << "(Village &&) - Move c'tor\n"s;
     country_  = std::move(that.country_);
@@ -57,14 +57,14 @@ public:
   }
 
   ~Village() {
-    std::clog << "@["s << this << "] "s
+    std::clog << "@["s << std::setw(18)  << this << "] "s
               << " In "s
               << __func__
               << "() - D'tor\n"s;
   }
 
   Village const & operator=(Village const & that) {
-    std::clog << "@["s << this << "] "s
+    std::clog << "@["s << std::setw(18)  << this << "] "s
               << " In "s << __func__
               << "(Village const &) - Copy assignment\n"s;
     country_  = that.country_;
@@ -78,7 +78,7 @@ public:
   }
 
   Village & operator=(Village && that) {
-    std::clog << "@["s << this << "] "s
+    std::clog << "@["s << std::setw(18)  << this << "] "s
               << "In "s << __func__
               << "(Village &&) - Move assignment\n"s;
     country_  = std::move(that.country_);
@@ -97,7 +97,7 @@ public:
 #else
   bool operator==(Village const & that)
   const noexcept {
-    std::clog << "@["s << this << "] "s
+    std::clog << "@["s << std::setw(18)  << this << "] "s
               << "In "s << __func__
               << "(Village const &)\n"s;
     return country_  == that.country_
@@ -110,7 +110,7 @@ public:
 
   bool operator!=(Village const & that)
   const noexcept {
-    std::clog << "@["s << this << "] "s
+    std::clog << "@["s << std::setw(18)  << this << "] "s
               << "In "s << __func__
               << "(Village const &)\n"s;
     return !(*this == that);
@@ -118,7 +118,7 @@ public:
 
   bool operator<(Village const & that)
   const {
-    std::clog << "@["s << this << "] "s
+    std::clog << "@["s << std::setw(18)  << this << "] "s
               << "In "s << __func__
               << "(Village const &)\n"s;
     return  (country_  <  that.country_)
@@ -152,7 +152,7 @@ public:
 
   bool operator>(Village const & that)
   const {
-    std::clog << "@["s << this << "] "s
+    std::clog << "@["s << std::setw(18)  << this << "] "s
               << "In "s << __func__
               << "(Village const &)\n"s;
     return that < *this;
@@ -160,7 +160,7 @@ public:
 
   bool operator<=(Village const & that)
   const {
-    std::clog << "@["s << this << "] "s
+    std::clog << "@["s << std::setw(18)  << this << "] "s
               << "In "s << __func__
               << "(Village const &)\n"s;
     return !(that < *this);
@@ -168,7 +168,7 @@ public:
 
   bool operator>=(Village const & that)
   const {
-    std::clog << "@["s << this << "] "s
+    std::clog << "@["s << std::setw(18)  << this << "] "s
               << "In "s << __func__
               << "(Village const &)\n"s;
     return !(*this < that);
