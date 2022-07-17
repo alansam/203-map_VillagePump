@@ -163,7 +163,16 @@ int main(int argc, char const * argv[]) {
   seek_copy(villages, "V3");
   std::cout << std::endl;
 
-  return 0;
+  std::cout << "\nSearch with a for loop:\n";
+  for (auto seek = "V2";
+       auto const & v_ : villages) {
+    if (v_.village() == seek) {
+      std::cout << v_ << '\n';
+    }
+  }
+  std::cout << std::endl;
+
+return 0;
 }
 
 void seek_find(std::vector<Village> const & villages,
