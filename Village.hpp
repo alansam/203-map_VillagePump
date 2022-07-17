@@ -243,10 +243,10 @@ public:
   }
 
 private:
-  std::string village_;
-  std::string cell_;
-  std::string sector_;
-  std::string district_;  
-  std::string province_;
   std::string country_;
+  std::string province_;
+  std::string district_;  
+  std::string sector_;
+  std::string cell_;
+  std::string village_;
 };
