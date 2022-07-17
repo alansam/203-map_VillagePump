@@ -23,6 +23,11 @@ void seek_find(std::vector<Village> const &,
                std::string const &);
 void seek_copy(std::vector<Village> const &,
                std::string const &);
+void seek_each(std::vector<Village> const &,
+               std::string const &);
+void seek_loop(std::vector<Village> const &,
+               std::string const &);
+void operator_logic(std::vector<Village> const &);
 
 int main(int argc, char const * argv[]) {
   std::cout << "FarOnerlookedArchive"
@@ -32,6 +37,7 @@ int main(int argc, char const * argv[]) {
     { "C1", "P1", "D1", "S1", "L1", "V1", },
     { "C1", "P1", "D1", "S1", "L1", "V2", },
     { "C2", "P1", "D1", "S1", "L1", "V1", },
+    { "C7", "P1", "D1", "S1", "L1", "V5", },
   };
 
   villages.push_back({ "C2", "P1", "D1", "S2", "L1", "V3", });
@@ -76,6 +82,123 @@ int main(int argc, char const * argv[]) {
   };
 
   std::cout.put('\n');
+  std::cout.put('\n');
+
+  std::cout << std::string(80, '=')
+            << std::endl;
+  show(villages);
+  std::cout.put('\n');
+  std::cout << std::string(80, '~')
+            << std::endl;
+  std::sort(villages.begin(), villages.end());
+  show(villages);
+  std::cout.put('\n');
+  std::cout << std::string(80, '=')
+            << std::endl;
+  std::cout << std::endl;
+
+  seek_find(villages, "V4");
+  std::cout << std::endl;
+
+  seek_copy(villages, "V3");
+  std::cout << std::endl;
+
+  seek_each(villages, "V1");
+  std::cout << std::endl;
+
+  seek_loop(villages, "V5");
+  std::cout << std::endl;
+
+  operator_logic(villages);
+  std::cout << std::endl;
+
+  return 0;
+}
+
+void seek_find(std::vector<Village> const & villages,
+              std::string const & seek) {
+  std::cout << "In " << __func__
+            << "(std::vector<Village> const &, std::string const &)\n";
+  auto ville = [&seek](Village const & v_) {    
+     return (v_.village() == seek);
+  };
+
+  auto fi = std::find_if(villages.cbegin(),
+                         villages.cend(),
+                         ville);
+
+ std::cout << "village "
+            << std::quoted(seek)
+            << " found in:\n";
+   while (fi != villages.cend()) {
+    std::cout << *fi << '\n';
+    fi = std::find_if(std::next(fi),
+                      villages.cend(),
+                      ville);
+  }
+  std::cout << std::endl;  
+}
+
+void seek_copy(std::vector<Village> const & villages,
+               std::string const & seek) {
+  std::cout << "In " << __func__
+            << "(std::vector<Village> const &, std::string const &)\n";
+  auto ville = [&seek](Village const & v_) {    
+     return (v_.village() == seek);
+  };
+
+  auto cpy = std::vector<Village>();
+  std::copy_if(villages.cbegin(),
+               villages.cend(),
+               std::back_inserter(cpy),
+               ville);
+
+  std::cout << "village "
+            << std::quoted(seek)
+            << " found in:\n";
+  std::for_each(cpy.cbegin(),
+                cpy.cend(),
+                [](auto const & v_) {
+    std::cout << v_ << '\n';
+  });
+  std::cout << std::endl;  
+}
+
+void seek_each(std::vector<Village> const & villages,
+               std::string const & seek) {
+  std::cout << "In " << __func__
+            << "(std::vector<Village> const &, std::string const &)\n";
+
+  std::cout << "village "
+            << std::quoted(seek)
+            << " found in:\n";
+  std::for_each(villages.cbegin(),
+                villages.cend(),
+                [&seek](auto const & v_) {
+    if (v_.village() == seek) {
+      std::cout << v_ << '\n';
+    }
+  });
+  std::cout << std::endl;
+}
+
+void seek_loop(std::vector<Village> const & villages,
+               std::string const & seek) {
+  std::cout << "In " << __func__
+            << "(std::vector<Village> const &, std::string const &)\n";
+
+  std::cout << "village "
+            << std::quoted(seek)
+            << " found in:\n";
+  for (auto const & v_ : villages) {
+    if (v_.village() == seek) {
+      std::cout << v_ << '\n';
+    }
+  }
+  std::cout << std::endl;
+}
+
+void operator_logic(std::vector<Village> const & villages) {
   std::cout << std::string(80, '.')
             << std::endl;
   std::cout << std::boolalpha;
@@ -141,85 +264,7 @@ int main(int argc, char const * argv[]) {
   std::clog << "?\n";
   std::cout << "[0] >= [0]: "
             << (villages[0] >= villages[0]) << '\n';
-  std::cout.put('\n');
-  std::cout.put('\n');
-
-  std::cout << std::string(80, '=')
+  std::cout << std::string(80, '.')
             << std::endl;
-  show(villages);
   std::cout.put('\n');
-  std::cout << std::string(80, '~')
-            << std::endl;
-  std::sort(villages.begin(), villages.end());
-  show(villages);
-  std::cout.put('\n');
-  std::cout << std::string(80, '=')
-            << std::endl;
-  std::cout << std::endl;
-
-  seek_find(villages, "V4");
-  std::cout << std::endl;
-
-  seek_copy(villages, "V3");
-  std::cout << std::endl;
-
-  std::cout << "\nSearch with a for loop:\n";
-  for (auto seek = "V2";
-       auto const & v_ : villages) {
-    if (v_.village() == seek) {
-      std::cout << v_ << '\n';
-    }
-  }
-  std::cout << std::endl;
-
-return 0;
-}
-
-void seek_find(std::vector<Village> const & villages,
-              std::string const & seek) {
-  std::cout << "In " << __func__
-            << "(std::vector<Village> const &, std::string const &)\n";
-  auto ville = [&seek](Village const & v_) {    
-     return (v_.village() == seek);
-  };
-
-  auto fi = std::find_if(villages.cbegin(),
-                         villages.cend(),
-                         ville);
-
- std::cout << "village "
-            << std::quoted(seek)
-            << " found in:\n";
-   while (fi != villages.cend()) {
-    std::cout << *fi << '\n';
-    fi = std::find_if(std::next(fi),
-                      villages.cend(),
-                      ville);
-  }
-  std::cout << std::endl;  
-}
-
-void seek_copy(std::vector<Village> const & villages,
-               std::string const & seek) {
-  std::cout << "In " << __func__
-            << "(std::vector<Village> const &, std::string const &)\n";
-  auto ville = [&seek](Village const & v_) {    
-     return (v_.village() == seek);
-  };
-
-  auto cpy = std::vector<Village>();
-  std::copy_if(villages.cbegin(),
-               villages.cend(),
-               std::back_inserter(cpy),
-               ville);
-
-  std::cout << "village "
-            << std::quoted(seek)
-            << " found in:\n";
-  std::for_each(cpy.cbegin(),
-                cpy.cend(),
-                [](auto const & v_) {
-    std::cout << v_ << '\n';
-  });
-  std::cout << std::endl;  
 }
