@@ -9,14 +9,16 @@
 #include <compare>
 #endif
 
+using namespace std::literals::string_literals;
+
 class Village {
 public:
-  Village(std::string const & cy = "",
-          std::string const & pe = "",
-          std::string const & dt = "",
-          std::string const & sr = "",
-          std::string const & cl = "",
-          std::string const & ve = "") :
+  Village(std::string const & cy = ""s,
+          std::string const & pe = ""s,
+          std::string const & dt = ""s,
+          std::string const & sr = ""s,
+          std::string const & cl = ""s,
+          std::string const & ve = ""s) :
     country_   { cy },
     province_  { pe },
     district_  { dt },
@@ -24,9 +26,9 @@ public:
     cell_      { cl },
     village_   { ve }
   {
-    std::clog << "@[" << this << "]"
-              << " In " << __func__
-              << "(std::string const &,std::string const &,std::string const &,std::string const &std::string const &,std::string const &) - Default c'tor\n";
+    std::clog << "@["s << this << "] "s
+              << " In "s << __func__
+              << "(std::string const &,std::string const &,std::string const &,std::string const &std::string const &,std::string const &) - Default c'tor\n"s;
   }
 
   Village(Village const & that) :
@@ -37,15 +39,15 @@ public:
     cell_      { that.cell_ },
     village_   { that.village_ }
   {
-    std::clog << "@[" << this << "]"
-              << " In " << __func__
-              << "(Village const &) - Copy c'tor\n";
+    std::clog << "@["s << this << "] "s
+              << " In "s << __func__
+              << "(Village const &) - Copy c'tor\n"s;
   }
 
   Village(Village && that) {
-    std::clog << "@[" << this << "]"
-              << " In " << __func__
-              << "(Village &&) - Move c'tor\n";
+    std::clog << "@["s << this << "] "s
+              << " In "s << __func__
+              << "(Village &&) - Move c'tor\n"s;
     country_  = std::move(that.country_);
     province_ = std::move(that.province_);
     district_ = std::move(that.district_);
@@ -55,17 +57,16 @@ public:
   }
 
   ~Village() {
-    std::clog << "@[" << this << "]"
-              << " In "
+    std::clog << "@["s << this << "] "s
+              << " In "s
               << __func__
-              << "() - D'tor\n";
+              << "() - D'tor\n"s;
   }
 
   Village const & operator=(Village const & that) {
-    std::clog << "@[" << this << "]"
-              << "@[" << this << "]"
-              << " In " << __func__
-              << "(Village const &) - Copy assignment\n";
+    std::clog << "@["s << this << "] "s
+              << " In "s << __func__
+              << "(Village const &) - Copy assignment\n"s;
     country_  = that.country_;
     province_ = that.province_;
     district_ = that.district_;
@@ -77,9 +78,9 @@ public:
   }
 
   Village & operator=(Village && that) {
-    std::clog << "@[" << this << "]"
-              << "In " << __func__
-              << "(Village &&) - Move assignment\n";
+    std::clog << "@["s << this << "] "s
+              << "In "s << __func__
+              << "(Village &&) - Move assignment\n"s;
     country_  = std::move(that.country_);
     province_ = std::move(that.province_);
     district_ = std::move(that.district_);
@@ -96,9 +97,9 @@ public:
 #else
   bool operator==(Village const & that)
   const noexcept {
-    std::clog << "@[" << this << "]"
-              << "In " << __func__
-              << "(Village const &)\n";
+    std::clog << "@["s << this << "] "s
+              << "In "s << __func__
+              << "(Village const &)\n"s;
     return country_  == that.country_
         && province_ == that.province_
         && district_ == that.district_
@@ -109,17 +110,17 @@ public:
 
   bool operator!=(Village const & that)
   const noexcept {
-    std::clog << "@[" << this << "]"
-              << "In " << __func__
-              << "(Village const &)\n";
+    std::clog << "@["s << this << "] "s
+              << "In "s << __func__
+              << "(Village const &)\n"s;
     return !(*this == that);
   }
 
   bool operator<(Village const & that)
   const {
-    std::clog << "@[" << this << "]"
-              << "In " << __func__
-              << "(Village const &)\n";
+    std::clog << "@["s << this << "] "s
+              << "In "s << __func__
+              << "(Village const &)\n"s;
     return  (country_  <  that.country_)
 
     ||     ((country_  == that.country_)
@@ -151,25 +152,25 @@ public:
 
   bool operator>(Village const & that)
   const {
-    std::clog << "@[" << this << "]"
-              << "In " << __func__
-              << "(Village const &)\n";
+    std::clog << "@["s << this << "] "s
+              << "In "s << __func__
+              << "(Village const &)\n"s;
     return that < *this;
   }
 
   bool operator<=(Village const & that)
   const {
-    std::clog << "@[" << this << "]"
-              << "In " << __func__
-              << "(Village const &)\n";
+    std::clog << "@["s << this << "] "s
+              << "In "s << __func__
+              << "(Village const &)\n"s;
     return !(that < *this);
   }
 
   bool operator>=(Village const & that)
   const {
-    std::clog << "@[" << this << "]"
-              << "In " << __func__
-              << "(Village const &)\n";
+    std::clog << "@["s << this << "] "s
+              << "In "s << __func__
+              << "(Village const &)\n"s;
     return !(*this < that);
   }
 #endif  // SPOCK_
@@ -232,11 +233,11 @@ public:
   friend
   std::ostream & operator<<(std::ostream & os,
                             Village const & that) {
-    os << that.country_  << ", "
-       << that.province_ << ", "
-       << that.district_ << ", "
-       << that.sector_   << ", "
-       << that.cell_     << ", "
+    os << that.country_  << ", "s
+       << that.province_ << ", "s
+       << that.district_ << ", "s
+       << that.sector_   << ", "s
+       << that.cell_     << ", "s
        << that.village_;
 
     return os;

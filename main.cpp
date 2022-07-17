@@ -19,6 +19,8 @@
 
 #include "Village.hpp"
 
+using namespace std::literals::string_literals;
+
 void seek_find(std::vector<Village> const &,
                std::string const &);
 void seek_copy(std::vector<Village> const &,
@@ -30,42 +32,42 @@ void seek_loop(std::vector<Village> const &,
 void operator_logic(std::vector<Village> const &);
 
 int main(int argc, char const * argv[]) {
-  std::cout << "FarOnerlookedArchive"
+  std::cout << "FarOnerlookedArchive"s
             << std::endl;
 
   auto villages = std::vector<Village> {
-    { "C1", "P1", "D1", "S1", "L1", "V1", },
-    { "C1", "P1", "D1", "S1", "L1", "V2", },
-    { "C2", "P1", "D1", "S1", "L1", "V1", },
-    { "C7", "P1", "D1", "S1", "L1", "V5", },
+    { "C1"s, "P1"s, "D1"s, "S1"s, "L1"s, "V1"s, },
+    { "C1"s, "P1"s, "D1"s, "S1"s, "L1"s, "V2"s, },
+    { "C2"s, "P1"s, "D1"s, "S1"s, "L1"s, "V1"s, },
+    { "C7"s, "P1"s, "D1"s, "S1"s, "L1"s, "V5"s, },
   };
 
-  villages.push_back({ "C2", "P1", "D1", "S2", "L1", "V3", });
+  villages.push_back({ "C2"s, "P1"s, "D1"s, "S2"s, "L1"s, "V3"s, });
 
   {
-    auto vt = Village("C1", "P1", "D3", "S1", "L1", "V1");
+    auto vt = Village("C1"s, "P1"s, "D3"s, "S1"s, "L1"s, "V1"s);
     std::clog << ".\n";
     villages.push_back(vt);
-    vt.cell("L3");
-    vt.village("V3");
-    std::clog << ".\n";
+    vt.cell("L3"s);
+    vt.village("V3"s);
+    std::clog << ".\n"s;
     villages.push_back(vt);
     auto vu = Village();
-    vt.village("V4");
+    vt.village("V4"s);
     vu = vt;
-    std::clog << ".\n";
+    std::clog << ".\n"s;
     villages.push_back(vu);
   }
   std::cout.put('\n');
 
   {
-    auto vt = std::move(Village("C6", "P5", "D4", "S3", "L2", "V1"));
+    auto vt = std::move(Village("C6"s, "P5"s, "D4"s, "S3"s, "L2"s, "V1"s));
     villages.push_back(vt);
-    vt = std::move(Village({ "C6", "P5", "D4", "S3", "L2", "V2", }));
+    vt = std::move(Village({ "C6"s, "P5"s, "D4"s, "S3"s, "L2"s, "V2"s, }));
     villages.push_back(vt);
-    vt = std::move(Village("C6", "P5", "D4", "S3", "L2", "V3"));
+    vt = std::move(Village("C6"s, "P5"s, "D4"s, "S3"s, "L2"s, "V3"s));
     villages.push_back(vt);
-    vt.village("V4");
+    vt.village("V4"s);
     auto vu = Village(std::move(vt));
     villages.push_back(vu);
   }
@@ -73,9 +75,9 @@ int main(int argc, char const * argv[]) {
 
   auto show = [](auto const & villages) {
     for (auto vc { 0ul }; auto & ville : villages) {
-      std::cout << "Village"
+      std::cout << "Village"s
                 << std::setw(3)
-                << ++vc << ": "
+                << ++vc << ": "s
                 << ville
                 << std::endl;
     }
@@ -97,16 +99,16 @@ int main(int argc, char const * argv[]) {
             << std::endl;
   std::cout << std::endl;
 
-  seek_find(villages, "V4");
+  seek_find(villages, "V4"s);
   std::cout << std::endl;
 
-  seek_copy(villages, "V3");
+  seek_copy(villages, "V3"s);
   std::cout << std::endl;
 
-  seek_each(villages, "V1");
+  seek_each(villages, "V1"s);
   std::cout << std::endl;
 
-  seek_loop(villages, "V5");
+  seek_loop(villages, "V5"s);
   std::cout << std::endl;
 
   operator_logic(villages);
@@ -117,8 +119,8 @@ int main(int argc, char const * argv[]) {
 
 void seek_find(std::vector<Village> const & villages,
               std::string const & seek) {
-  std::cout << "In " << __func__
-            << "(std::vector<Village> const &, std::string const &)\n";
+  std::cout << "In "s << __func__
+            << "(std::vector<Village> const &, std::string const &)\n"s;
   auto ville = [&seek](Village const & v_) {    
      return (v_.village() == seek);
   };
@@ -127,9 +129,9 @@ void seek_find(std::vector<Village> const & villages,
                          villages.cend(),
                          ville);
 
- std::cout << "village "
+ std::cout << "village "s
             << std::quoted(seek)
-            << " found in:\n";
+            << " found in:\n"s;
    while (fi != villages.cend()) {
     std::cout << *fi << '\n';
     fi = std::find_if(std::next(fi),
@@ -141,8 +143,8 @@ void seek_find(std::vector<Village> const & villages,
 
 void seek_copy(std::vector<Village> const & villages,
                std::string const & seek) {
-  std::cout << "In " << __func__
-            << "(std::vector<Village> const &, std::string const &)\n";
+  std::cout << "In "s << __func__
+            << "(std::vector<Village> const &, std::string const &)\n"s;
   auto ville = [&seek](Village const & v_) {    
      return (v_.village() == seek);
   };
@@ -153,9 +155,9 @@ void seek_copy(std::vector<Village> const & villages,
                std::back_inserter(cpy),
                ville);
 
-  std::cout << "village "
+  std::cout << "village "s
             << std::quoted(seek)
-            << " found in:\n";
+            << " found in:\n"s;
   std::for_each(cpy.cbegin(),
                 cpy.cend(),
                 [](auto const & v_) {
@@ -166,12 +168,12 @@ void seek_copy(std::vector<Village> const & villages,
 
 void seek_each(std::vector<Village> const & villages,
                std::string const & seek) {
-  std::cout << "In " << __func__
-            << "(std::vector<Village> const &, std::string const &)\n";
+  std::cout << "In "s << __func__
+            << "(std::vector<Village> const &, std::string const &)\n"s;
 
-  std::cout << "village "
+  std::cout << "village "s
             << std::quoted(seek)
-            << " found in:\n";
+            << " found in:\n"s;
   std::for_each(villages.cbegin(),
                 villages.cend(),
                 [&seek](auto const & v_) {
@@ -184,12 +186,12 @@ void seek_each(std::vector<Village> const & villages,
 
 void seek_loop(std::vector<Village> const & villages,
                std::string const & seek) {
-  std::cout << "In " << __func__
-            << "(std::vector<Village> const &, std::string const &)\n";
+  std::cout << "In "s << __func__
+            << "(std::vector<Village> const &, std::string const &)\n"s;
 
-  std::cout << "village "
+  std::cout << "village "s
             << std::quoted(seek)
-            << " found in:\n";
+            << " found in:\n"s;
   for (auto const & v_ : villages) {
     if (v_.village() == seek) {
       std::cout << v_ << '\n';
@@ -199,70 +201,73 @@ void seek_loop(std::vector<Village> const & villages,
 }
 
 void operator_logic(std::vector<Village> const & villages) {
+  std::cout << "In "s << __func__
+            << "(std::vector<Village> const &)\n"s;
+
   std::cout << std::string(80, '.')
             << std::endl;
   std::cout << std::boolalpha;
-  std::clog << "?\n";
-  std::cout << "[0]: " << villages[0] << '\n'
-            << "[1]: " << villages[1] << '\n';
-  std::clog << "?\n";
-  std::cout << "[0] == [1]: "
+  std::clog << "?\n"s;
+  std::cout << "[0]: "s << villages[0] << '\n'
+            << "[1]: "s << villages[1] << '\n';
+  std::clog << "?\n"s;
+  std::cout << "[0] == [1]: "s
             << (villages[0] == villages[1]) << '\n';
-  std::clog << "?\n";
-  std::cout << "[1] == [0]: "
+  std::clog << "?\n"s;
+  std::cout << "[1] == [0]: "s
             << (villages[1] == villages[0]) << '\n';
-  std::clog << "?\n";
-  std::cout << "[0] == [0]: "
+  std::clog << "?\n"s;
+  std::cout << "[0] == [0]: "s
             << (villages[0] == villages[0]) << '\n';
   std::cout.put('\n');
-  std::clog << "?\n";
-  std::cout << "[0] != [1]: "
+  std::clog << "?\n"s;
+  std::cout << "[0] != [1]: "s
             << (villages[0] != villages[1]) << '\n';
-  std::clog << "?\n";
-  std::cout << "[1] != [0]: "
+  std::clog << "?\n"s;
+  std::cout << "[1] != [0]: "s
             << (villages[1] != villages[0]) << '\n';
-  std::clog << "?\n";
-  std::cout << "[0] != [0]: "
+  std::clog << "?\n"s;
+  std::cout << "[0] != [0]: "s
             << (villages[0] != villages[0]) << '\n';
   std::cout.put('\n');
-  std::clog << "?\n";
-  std::cout << "[0] <  [1]: "
+  std::clog << "?\n"s;
+  std::cout << "[0] <  [1]: "s
             << (villages[0] <  villages[1]) << '\n';
-  std::clog << "?\n";
-  std::cout << "[1] <  [0]: "
+  std::clog << "?\n"s;
+  std::cout << "[1] <  [0]: "s
             << (villages[1] <  villages[0]) << '\n';
-  std::clog << "?\n";
-  std::cout << "[0] <  [0]: "
+  std::clog << "?\n"s;
+  std::cout << "[0] <  [0]: "s
             << (villages[0] <  villages[0]) << '\n';
   std::cout.put('\n');
-  std::clog << "?\n";
-  std::cout << "[0] >  [1]: "
+  std::clog << "?\n"s;
+  std::cout << "[0] >  [1]: "s
             << (villages[0] >  villages[1]) << '\n';
-  std::clog << "?\n";
-  std::cout << "[1] >  [0]: "
+  std::clog << "?\n"s;
+  std::cout << "[1] >  [0]: "s
             << (villages[1] >  villages[0]) << '\n';
-  std::clog << "?\n";
-  std::cout << "[0] >  [0]: "
+  std::clog << "?\n"s;
+  std::cout << "[0] >  [0]: "s
             << (villages[0] >  villages[0]) << '\n';
   std::cout.put('\n');
-  std::clog << "?\n";
-  std::cout << "[0] <= [1]: "
+  std::clog << "?\n"s;
+  std::cout << "[0] <= [1]: "s
             << (villages[0] <= villages[1]) << '\n';
-  std::clog << "?\n";
-  std::cout << "[1] <= [0]: "
+  std::clog << "?\n"s;
+  std::cout << "[1] <= [0]: "s
             << (villages[1] <= villages[0]) << '\n';
-  std::clog << "?\n";
-  std::cout << "[0] <= [0]: "
+  std::clog << "?\n"s;
+  std::cout << "[0] <= [0]: "s
             << (villages[0] <= villages[0]) << '\n';
   std::cout.put('\n');
-  std::clog << "?\n";
-  std::cout << "[0] >= [1]: "
+  std::clog << "?\n"s;
+  std::cout << "[0] >= [1]: "s
             << (villages[0] >= villages[1]) << '\n';
-  std::clog << "?\n";
-  std::cout << "[1] >= [0]: "
+  std::clog << "?\n"s;
+  std::cout << "[1] >= [0]: "s
             << (villages[1] >= villages[0]) << '\n';
-  std::clog << "?\n";
-  std::cout << "[0] >= [0]: "
+  std::clog << "?\n"s;
+  std::cout << "[0] >= [0]: "s
             << (villages[0] >= villages[0]) << '\n';
   std::cout << std::string(80, '.')
             << std::endl;
