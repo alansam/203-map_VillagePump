@@ -4,6 +4,8 @@
 // enable when compiler can support spaceships
 //#define SPOCK_
 
+#include <iostream>
+#include <iomanip>
 #include <string>
 #ifdef SPOCK_
 #include <compare>
@@ -18,161 +20,30 @@ public:
           std::string const & dt = ""s,
           std::string const & sr = ""s,
           std::string const & cl = ""s,
-          std::string const & ve = ""s) :
-    country_   { cy },
-    province_  { pe },
-    district_  { dt },
-    sector_    { sr },
-    cell_      { cl },
-    village_   { ve }
-  {
-    std::clog << "@["s << std::setw(18) << this << "]"s
-              << " In "s << __func__
-              << "(std::string const &,std::string const &,std::string const &,std::string const &std::string const &,std::string const &) - Default c'tor\n"s;
-  }
+          std::string const & ve = ""s);
+  Village(Village const & that);
+  Village(Village && that);
+  ~Village();
 
-  Village(Village const & that) :
-    country_   { that.country_ },
-    province_  { that.province_ },
-    district_  { that.district_ },
-    sector_    { that.sector_ },
-    cell_      { that.cell_ },
-    village_   { that.village_ }
-  {
-    std::clog << "@["s << std::setw(18)  << this << "]"s
-              << " In "s << __func__
-              << "(Village const &) - Copy c'tor\n"s;
-  }
-
-  Village(Village && that) {
-    std::clog << "@["s << std::setw(18)  << this << "]"s
-              << " In "s << __func__
-              << "(Village &&) - Move c'tor\n"s;
-    country_  = std::move(that.country_);
-    province_ = std::move(that.province_);
-    district_ = std::move(that.district_);
-    sector_   = std::move(that.sector_);
-    cell_     = std::move(that.cell_);
-    village_  = std::move(that.village_);
-  }
-
-  ~Village() {
-    std::clog << "@["s << std::setw(18)  << this << "]"s
-              << " In "s
-              << __func__
-              << "() - D'tor\n"s;
-  }
-
-  Village const & operator=(Village const & that) {
-    std::clog << "@["s << std::setw(18)  << this << "]"s
-              << " In "s << __func__
-              << "(Village const &) - Copy assignment\n"s;
-    country_  = that.country_;
-    province_ = that.province_;
-    district_ = that.district_;
-    sector_   = that.sector_;
-    cell_     = that.cell_;
-    village_  = that.village_;
-
-    return *this;
-  }
-
-  Village & operator=(Village && that) {
-    std::clog << "@["s << std::setw(18)  << this << "]"s
-              << " In "s << __func__
-              << "(Village &&) - Move assignment\n"s;
-    country_  = std::move(that.country_);
-    province_ = std::move(that.province_);
-    district_ = std::move(that.district_);
-    sector_   = std::move(that.sector_);
-    cell_     = std::move(that.cell_);
-    village_  = std::move(that.village_);
-
-    return *this;
-  }
+  Village const & operator=(Village const & that);
+  Village & operator=(Village && that);
 
 #ifdef SPOCK_
   auto operator<=>(Village const &)
   const = default;
 #else
   bool operator==(Village const & that)
-  const noexcept {
-    std::clog << "@["s << std::setw(18)  << this << "]"s
-              << " In "s << __func__
-              << "(Village const &)\n"s;
-    return country_  == that.country_
-        && province_ == that.province_
-        && district_ == that.district_
-        && sector_   == that.sector_
-        && cell_     == that.cell_
-        && village_  == that.village_;
-  }
-
+  const noexcept;
   bool operator!=(Village const & that)
-  const noexcept {
-    std::clog << "@["s << std::setw(18)  << this << "]"s
-              << " In "s << __func__
-              << "(Village const &)\n"s;
-    return !(*this == that);
-  }
-
+  const noexcept;
   bool operator<(Village const & that)
-  const {
-    std::clog << "@["s << std::setw(18)  << this << "]"s
-              << " In "s << __func__
-              << "(Village const &)\n"s;
-    return  (country_  <  that.country_)
-
-    ||     ((country_  == that.country_)
-    &&      (province_ <  that.province_))
-
-    ||     ((country_  == that.country_)
-    &&      (province_ == that.province_)
-    &&      (district_ <  that.district_))
-
-    ||     ((country_  == that.country_)
-    &&      (province_ == that.province_)
-    &&      (district_ == that.district_)
-    &&      (sector_   <  that.sector_))
-
-    ||     ((country_  == that.country_)
-    &&      (province_ == that.province_)
-    &&      (district_ == that.district_)
-    &&      (sector_   == that.sector_)
-    &&      (cell_     <  that.cell_))
-
-    ||     ((country_  == that.country_)
-    &&      (province_ == that.province_)
-    &&      (district_ == that.district_)
-    &&      (sector_   == that.sector_)
-    &&      (cell_     == that.cell_)
-    &&      (village_  <  that.village_))
-    ;
-  }
-
+  const noexcept;
   bool operator>(Village const & that)
-  const {
-    std::clog << "@["s << std::setw(18)  << this << "]"s
-              << " In "s << __func__
-              << "(Village const &)\n"s;
-    return that < *this;
-  }
-
+  const noexcept;
   bool operator<=(Village const & that)
-  const {
-    std::clog << "@["s << std::setw(18)  << this << "]"s
-              << " In "s << __func__
-              << "(Village const &)\n"s;
-    return !(that < *this);
-  }
-
+  const noexcept;
   bool operator>=(Village const & that)
-  const {
-    std::clog << "@["s << std::setw(18)  << this << "]"s
-              << " In "s << __func__
-              << "(Village const &)\n"s;
-    return !(*this < that);
-  }
+  const noexcept;
 #endif  // SPOCK_
 
   //  getters & setters
@@ -232,16 +103,7 @@ public:
 
   friend
   std::ostream & operator<<(std::ostream & os,
-                            Village const & that) {
-    os << that.country_  << ", "s
-       << that.province_ << ", "s
-       << that.district_ << ", "s
-       << that.sector_   << ", "s
-       << that.cell_     << ", "s
-       << that.village_;
-
-    return os;
-  }
+                            Village const & that);
 
 private:
   std::string country_;
